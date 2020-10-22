@@ -1,0 +1,51 @@
+{
+  "name": "@rollcakejs/rollcake-spa",
+  "version": "0.0.1",
+  "description": "🖖 RollCakeSpa.js is a progressive, incrementally-adoptable JavaScript framework for building micro-frontends UI on the web.",
+  "main": "src/index.js",
+  "sideEffects": false,
+  "scripts": {
+    "lint": "eslint src --ext .js",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged",
+    "commit-msg": "node scripts/verify-commit-msg.js"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rollcakejs/rollcake-spa.git"
+  },
+  "keywords": [
+    "rollcake-spa"
+  ],
+  "author": "Antonio Neto",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rollcakejs/rollcake-spa/issues"
+  },
+  "homepage": "https://github.com/rollcakejs/rollcake-spa#readme",
+  "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/preset-env": "^7.11.5",
+    "babel-loader": "^8.1.0",
+    "eslint": "^7.11.0",
+    "babel-eslint": "^10.1.0"
+  },
+  "dependencies": {
+    "@rollcakejs/rollcake-mf-broker": "0.0.1",
+    "@rollcakejs/rollcake-router": "0.0.1",
+    "loadash": "^1.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
+}
