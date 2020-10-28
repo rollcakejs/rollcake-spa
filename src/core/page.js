@@ -29,7 +29,7 @@ class Page {
 
     _configuration() {
         if (this.state) {
-            const state = window[WINDOW_VARIABLE.BROKER][CONTEXT_ATTRIBUTE.STATE];
+            const state = window[WINDOW_VARIABLE.MF_BROKER][CONTEXT_ATTRIBUTE.STATE];
 
             if (state === null || state === undefined)
             {
@@ -42,10 +42,10 @@ class Page {
             this._useStateReferenceCheckAndUpdate();
         }
         
-        const bus = window[WINDOW_VARIABLE.BROKER][CONTEXT_ATTRIBUTE.BUS];
+        const bus = window[WINDOW_VARIABLE.MF_BROKER][CONTEXT_ATTRIBUTE.BUS];
 
         bus.subscribe(INTERNAL_BUS_PUBLISH_EVENT_TYPE.IS_FETCHING_MICFRONTEND, (isFetching) => {
-            if (isFetching && this.loadingContent) {
+            if (isFetching && this.loadingContent && !this._loadingContentDOMNode) {
                 this._hideContent();
                 this._renderLoadingContent();
             }
@@ -77,14 +77,14 @@ class Page {
     }
 
     _renderContent() {
-        if (this._entryDOMNode !== null) {
+        if (this._entryDOMNode !== null && this.content) {
             const vDOMContent = this.content();
             this._childDOMNode = vDOMContent.render(this._entryDOMNode, this);
         }
     }
 
     _renderLoadingContent() {
-        if (this._entryDOMNode !== null) {
+        if (this._entryDOMNode !== null && this.loadingContent) {
             const vDOMContent = this.loadingContent();
             this._loadingContentDOMNode = vDOMContent.render(this._entryDOMNode, this);
         }

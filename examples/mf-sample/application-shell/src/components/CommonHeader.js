@@ -15,7 +15,7 @@ const CommonHeader = () => createElement({
                 textContent: 'Home',
                 eventListener: 'click',
                 eventHandler: () => {
-                    window[WINDOW_VARIABLE.BROKER][CONTEXT_ATTRIBUTE.BUS].publish(PUBLIC_BUS_PUBLISH_EVENT_TYPE.NAVIGATE_TO, '/');
+                    window[WINDOW_VARIABLE.MF_BROKER][CONTEXT_ATTRIBUTE.BUS].publish(PUBLIC_BUS_PUBLISH_EVENT_TYPE.NAVIGATE_TO, '/');
                 }
             }
         }),
@@ -30,7 +30,7 @@ const CommonHeader = () => createElement({
                 textContent: 'React',
                 eventListener: 'click',
                 eventHandler: () => {
-                    window[WINDOW_VARIABLE.BROKER][CONTEXT_ATTRIBUTE.BUS].publish(PUBLIC_BUS_PUBLISH_EVENT_TYPE.NAVIGATE_TO, '/react');
+                    window[WINDOW_VARIABLE.MF_BROKER][CONTEXT_ATTRIBUTE.BUS].publish(PUBLIC_BUS_PUBLISH_EVENT_TYPE.NAVIGATE_TO, '/react');
                 }
             }
         }),
@@ -40,7 +40,7 @@ const CommonHeader = () => createElement({
                 textContent: 'Vue',
                 eventListener: 'click',
                 eventHandler: () => {
-                    window[WINDOW_VARIABLE.BROKER][CONTEXT_ATTRIBUTE.BUS].publish(PUBLIC_BUS_PUBLISH_EVENT_TYPE.NAVIGATE_TO, '/vue');
+                    window[WINDOW_VARIABLE.MF_BROKER][CONTEXT_ATTRIBUTE.BUS].publish(PUBLIC_BUS_PUBLISH_EVENT_TYPE.NAVIGATE_TO, '/vue');
                 }
             }
         }),

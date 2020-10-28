@@ -16,7 +16,7 @@ class RollCakeSpa {
             {
                 this._VPage.destroy();
             }
-            if (props) {
+            if (props && props.item) {
                 this._VPage = props.item();
                 this._VPage.render(this.entryDOMNode, loadingContent);
             }
