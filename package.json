@@ -1,6 +1,6 @@
 {
   "name": "@rollcakejs/rollcake-spa",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "🖖 RollCakeSpa.js is a progressive, incrementally-adoptable JavaScript framework for building micro-frontends UI on the web.",
   "main": "src/index.js",
   "sideEffects": false,
@@ -41,7 +41,7 @@
     "babel-eslint": "^10.1.0"
   },
   "dependencies": {
-    "@rollcakejs/rollcake-mf-broker": "0.0.4",
+    "@rollcakejs/rollcake-mf-broker": "0.0.5",
     "@rollcakejs/rollcake-router": "0.0.1",
     "loadash": "^1.0.0"
   },
