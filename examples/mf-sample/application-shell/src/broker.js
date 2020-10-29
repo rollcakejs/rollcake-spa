@@ -11,7 +11,4 @@ const buckets = [
     }
 ];
 
-export default new RollCakeMFBroker({
-    buckets: buckets,
-    state: {}
-});
+export default new RollCakeMFBroker(buckets);

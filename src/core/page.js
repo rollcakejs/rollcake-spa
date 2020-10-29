@@ -1,15 +1,12 @@
 import { WINDOW_VARIABLE, CONTEXT_ATTRIBUTE, INTERNAL_BUS_PUBLISH_EVENT_TYPE } from "@rollcakejs/rollcake-mf-broker"; 
-import { ERROR_MESSAGE } from "../shared/constants";
 
 class Page {
     constructor(
-        state = null,
         onInit = () => {},
         onUpdate = () => {},
         onDestroy = () => {},
         content = null
     ) {
-        this.state = state;
         this.onInit = onInit;
         this.onUpdate = onUpdate;
         this.onDestroy = onDestroy;
@@ -19,32 +16,30 @@ class Page {
         this.onBeforeDestroy = () => {};
         
         // strictly internal
+        this._rollCakeMFBroker = window[WINDOW_VARIABLE.ROLLCAKE];
         this._entryDOMNode = null;
         this._childDOMNode = null;
         this._loadingContentDOMNode = null;
         this._prevStateValue = null;
 
-        this._configuration();
+        this._watchIsStoreUpdatedEvent();
+        this._watchIsMicrofrontendFetchingEvent();
     }
 
-    _configuration() {
-        if (this.state) {
-            const state = window[WINDOW_VARIABLE.MF_BROKER][CONTEXT_ATTRIBUTE.STATE];
+    _watchIsStoreUpdatedEvent() {
+        const bus = this._rollCakeMFBroker[CONTEXT_ATTRIBUTE.BUS];
 
-            if (state === null || state === undefined)
-            {
-                throw Error(ERROR_MESSAGE.STATE_NOT_INITIALIZED);
-            }
-    
-            state[this.state.key] = this.state.value;
-            this._prevStateValue = JSON.parse(JSON.stringify(this.state.value));
+        bus.subscribe(INTERNAL_BUS_PUBLISH_EVENT_TYPE.IS_STORE_UPDATED, () => {
+            this._destroyContent();
+            this.onUpdate();
+            this._renderContent();
+        });
+    }
 
-            this._useStateReferenceCheckAndUpdate();
-        }
-        
-        const bus = window[WINDOW_VARIABLE.MF_BROKER][CONTEXT_ATTRIBUTE.BUS];
+    _watchIsMicrofrontendFetchingEvent() {
+        const bus = this._rollCakeMFBroker[CONTEXT_ATTRIBUTE.BUS];
 
-        bus.subscribe(INTERNAL_BUS_PUBLISH_EVENT_TYPE.IS_FETCHING_MICFRONTEND, (isFetching) => {
+        bus.subscribe(INTERNAL_BUS_PUBLISH_EVENT_TYPE.IS_FETCHING_MICROFRONTEND, (isFetching) => {
             if (isFetching && this.loadingContent && !this._loadingContentDOMNode) {
                 this._hideContent();
                 this._renderLoadingContent();
@@ -52,18 +47,6 @@ class Page {
             else {
                 this._destroyLoadingContent();
                 this._displayContent();
-            }
-        });
-    }
-
-    _useStateReferenceCheckAndUpdate() {
-        setInterval(() => {
-            if (JSON.stringify(this._prevStateValue) !== JSON.stringify(this.state.value)) {
-                this._destroyContent();
-                this.onUpdate();
-                this._renderContent();
-
-                this._prevStateValue = JSON.parse(JSON.stringify(this.state.value));
             }
         });
     }

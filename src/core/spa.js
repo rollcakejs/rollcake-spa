@@ -1,32 +1,28 @@
 import { PUBLIC_BUS_PUBLISH_EVENT_TYPE } from "../shared/constants";
 
 class RollCakeSpa {
-    constructor(broker, router, entryDOMNode, loadingContent = null) {
-        this.broker = broker;
-        this.router = router;
-        this.entryDOMNode = entryDOMNode;
-
+    constructor(broker, router, entryDOMNode, loadingContent) {
         // strictly internal
         this._VPage = null;
 
-        this.broker.init();
+        broker.init();
 
-        this.router.init((props) => {
+        router.init((response) => {
             if (this._VPage !== null)
             {
                 this._VPage.destroy();
             }
-            if (props && props.item) {
-                this._VPage = props.item();
-                this._VPage.render(this.entryDOMNode, loadingContent);
+            if (response && response.item) {
+                this._VPage = response.item();
+                this._VPage.render(entryDOMNode, loadingContent);
             }
             else {
                 this._VPage = null;
             }
         });
 
-        this.broker.bus().subscribe(PUBLIC_BUS_PUBLISH_EVENT_TYPE.NAVIGATE_TO, (path) => {
-            this.router.navigateTo(path);
+        broker.getBus().subscribe(PUBLIC_BUS_PUBLISH_EVENT_TYPE.NAVIGATE_TO, (path) => {
+            router.navigateTo(path);
         });
     }
 }
