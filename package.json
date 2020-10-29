@@ -2,15 +2,19 @@
   "name": "@rollcakejs/rollcake-spa",
   "version": "0.0.6",
   "description": "🖖 RollCakeSpa.js is a progressive, incrementally-adoptable JavaScript framework for building micro-frontends UI on the web.",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "sideEffects": false,
   "scripts": {
+    "build": "babel src -d dist",
     "lint": "eslint src --ext .js",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "npm run lint -- --fix",
+    "test": "jest"
   },
-  "gitHooks": {
-    "pre-commit": "lint-staged",
-    "commit-msg": "node scripts/verify-commit-msg.js"
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm test"
+    }
   },
   "lint-staged": {
     "*.js": [
@@ -32,18 +36,21 @@
   },
   "homepage": "https://github.com/rollcakejs/rollcake-spa#readme",
   "devDependencies": {
-    "@babel/core": "^7.11.6",
-    "@babel/plugin-proposal-class-properties": "^7.10.4",
-    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
-    "@babel/preset-env": "^7.11.5",
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.6.1",
     "babel-loader": "^8.1.0",
     "eslint": "^7.11.0",
-    "babel-eslint": "^10.1.0"
+    "husky": "^4.3.0",
+    "lint-staged": "^10.5.0",
+    "jsdom": "^16.4.0"
   },
   "dependencies": {
     "@rollcakejs/rollcake-mf-broker": "0.0.7",
     "@rollcakejs/rollcake-router": "0.0.1",
-    "loadash": "^1.0.0"
+    "lodash": "^4.17.20"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"

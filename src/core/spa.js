@@ -1,11 +1,20 @@
 import { PUBLIC_BUS_PUBLISH_EVENT_TYPE } from "../shared/constants";
 
 class RollCakeSpa {
-    constructor(broker, router, entryDOMNode, loadingContent) {
+    constructor(MFBroker, router, entryDOMNode, loadingContent) {
+        if (!MFBroker || !router || !entryDOMNode)
+            throw new Error();
+
         // strictly internal
         this._VPage = null;
+        
+        MFBroker.init();
 
-        broker.init();
+        if (MFBroker.getBus() !== undefined && MFBroker.getBus() !== null) {
+            MFBroker.getBus().subscribe(PUBLIC_BUS_PUBLISH_EVENT_TYPE.NAVIGATE_TO, (path) => {
+                router.navigateTo(path);
+            });
+        }
 
         router.init((response) => {
             if (this._VPage !== null)
@@ -19,10 +28,6 @@ class RollCakeSpa {
             else {
                 this._VPage = null;
             }
-        });
-
-        broker.getBus().subscribe(PUBLIC_BUS_PUBLISH_EVENT_TYPE.NAVIGATE_TO, (path) => {
-            router.navigateTo(path);
         });
     }
 }
