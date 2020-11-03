@@ -16,17 +16,17 @@ describe('RollCakeSpa', () => {
 
   const mockRollCakeSpa = () => new RollCakeSpa(mockMFBroker, mockRouter, document.createElement('div'));
   
-  it('should create a instance of RollCakeSpa', () => {
+  it('Should create a instance of RollCakeSpa', () => {
     const instance = mockRollCakeSpa();
     expect(instance).toBeInstanceOf(RollCakeSpa);
   });
 
-  it('should call MFBroker.init',() => {
+  it('Should call MFBroker.init',() => {
     mockRollCakeSpa();
     expect(mockMFBroker.init).toHaveBeenCalledTimes(1);
   });
 
-  it('should call router.init',() => {
+  it('Should call router.init',() => {
     mockRollCakeSpa();
     expect(mockRouter.init).toHaveBeenCalledTimes(1);
   });

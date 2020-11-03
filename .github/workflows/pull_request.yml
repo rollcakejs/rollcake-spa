@@ -1,15 +1,20 @@
-name: GPR Publish
-on: workflow_dispatch
+name: PR
+on:
+  pull_request:
+    branches:
+    - master
 jobs:
-  publish-gpr:
+  check_solution:
     runs-on: ubuntu-latest
-    steps:
+      steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
           scope: "@rollcakejs"
-      - run: npm publish
+      - run: npm install
+      - run: npm run test
+      - run: npm run build
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
