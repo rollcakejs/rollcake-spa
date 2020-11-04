@@ -28,8 +28,11 @@ jobs:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
           scope: "@rollcakejs"
-      - run: npm install
-      - run: npm run test
-      - run: npm run build
+        run: |
+          npm install
+        run: |
+          npm run test
+        run: |
+          npm run build
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
