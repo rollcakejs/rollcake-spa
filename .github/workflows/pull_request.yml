@@ -23,14 +23,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - name: Setup Node
       - uses: actions/setup-node@v1
         with:
           node-version: 12
           registry-url: https://npm.pkg.github.com/
           scope: "@rollcakejs"
+      - name: Install packages
         run: |
           npm install
+      - name: Run test
+        run: |
           npm run test
+      - name: Run build
+        run: |
           npm run build
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
