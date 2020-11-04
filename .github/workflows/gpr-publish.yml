@@ -1,8 +1,5 @@
 name: GPR Publish
-on:
-  push:
-    branches:
-      - main
+on: workflow_dispatch
 jobs:
   publish-gpr:
     runs-on: ubuntu-latest
