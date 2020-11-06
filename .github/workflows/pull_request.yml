@@ -4,32 +4,23 @@ on:
     branches:
     - master
 jobs:
-  changelog:
-    name: CHANGELOG
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v1
-    - name: Debugging info
-      run: |
-        git remote -v
-    - name: Check that CHANGELOG has been updated
-      run: |
-        # If this step fails, this means you haven't updated the CHANGELOG.md
-        # file with notes on your contribution.
-        git diff --name-only $(git merge-base origin/main HEAD) | grep '^CHANGELOG.md$' && echo "Thanks for helping keep our CHANGELOG up-to-date!"
-
   check-solution:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
-          node-version: 12
-          registry-url: https://npm.pkg.github.com/
-          scope: "@rollcakejs"
-      - run: |
+            node-version: 12
+            registry-url: https://npm.pkg.github.com/
+            scope: "@rollcakejs"
+      - name: Installing jest globally
+        run: |
+          npm install -g jest
+      - name: Installing dependencies
+        run: |
           npm install
+      - name: Check test
+        run: |
           npm run test
-          npm run build
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
